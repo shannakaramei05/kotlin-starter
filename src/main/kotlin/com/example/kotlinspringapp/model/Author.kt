@@ -1,5 +1,6 @@
 package com.example.kotlinspringapp.model
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -14,6 +15,7 @@ data class Author(
     val fullName:String,
 
     @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonManagedReference
     val books:MutableList<Book> = mutableListOf()
 
 ) {

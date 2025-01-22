@@ -1,6 +1,7 @@
 package com.example.kotlinspringapp.model
 
 import com.example.kotlinspringapp.dto.BookDTO
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -19,6 +20,7 @@ data class Book(
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @JsonBackReference
     val author:Author? = null,
 
     val publishYear:String,
