@@ -9,7 +9,7 @@ object UserMapper {
     fun toEntity(userDTO: UserRegisterDTO) : User {
         return User(
             userId = userDTO.userId,
-            fullName = userDTO.fullname,
+            fullName = userDTO.fullName,
             email = userDTO.email
         )
     }
