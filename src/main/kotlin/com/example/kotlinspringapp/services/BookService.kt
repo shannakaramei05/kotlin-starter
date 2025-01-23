@@ -1,7 +1,6 @@
 package com.example.kotlinspringapp.services
 
-import com.example.kotlinspringapp.dto.BookDTO
-import com.example.kotlinspringapp.exceptions.BookAlreadyExistsException
+import com.example.kotlinspringapp.dto.BookResponseDTO
 import com.example.kotlinspringapp.mapper.BookMapper
 import com.example.kotlinspringapp.model.Author
 import com.example.kotlinspringapp.model.Book
@@ -16,14 +15,14 @@ class BookService (
     private val authorRepository: AuthorRepository
     ) {
 
-    fun getAllBooks() :List<Book> {
-        return bookRepository.findAll()
+    fun getAllBooks() :List<BookResponseDTO> {
+        return bookRepository.findAllWithAuthorFullName()
     }
 
     @Transactional
-    fun addBook(bookDTO: BookDTO) :  Book{
+    fun addBook(bookResponseDTO: BookResponseDTO) :  Book{
 
-        val authorName = bookDTO.author?:"";
+        val authorName = bookResponseDTO.author?:"";
         var author = authorRepository.findByFullName(authorName)
         if(author == null) {
             author = Author(name = authorName)
@@ -34,7 +33,7 @@ class BookService (
 //            throw BookAlreadyExistsException("A Book with the title '${bookDTO.title}' already exists.")
 //        }
 
-        val book = BookMapper.toEntity(bookDTO,author)
+        val book = BookMapper.toEntity(bookResponseDTO,author)
         author.books.add(book)
 
         return bookRepository.save(book)

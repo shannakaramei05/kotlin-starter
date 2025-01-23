@@ -1,8 +1,8 @@
 package com.example.kotlinspringapp.dto
 
-data class BookDTO(
+data class BookResponseDTO(
     val title:String,
     val publishYear:String,
     val bookCoverUrl:String,
-    val author:String?
+    val author:String
 )

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/authors")
 class AuthorController (private val authorService: AuthorService){
 
-    //get author list book
-
     @GetMapping
     fun getAllAuthor():List<Author> {
         return authorService.getListAuthor();
