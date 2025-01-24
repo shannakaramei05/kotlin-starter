@@ -1,8 +1,7 @@
 package com.example.kotlinspringapp.controllers
 
-import com.example.kotlinspringapp.dto.BookDTO
-import com.example.kotlinspringapp.exceptions.BookAlreadyExistsException
-import com.example.kotlinspringapp.model.Book
+import com.example.kotlinspringapp.dto.BookResponseDTO
+import com.example.kotlinspringapp.exceptions.BookAlreadyExists
 import com.example.kotlinspringapp.services.BookService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController
 class BookController (private val bookService: BookService){
 
     @GetMapping
-    fun getAllBooks() : ResponseEntity<List<Book>> {
+    fun getAllBooks() : ResponseEntity<List<BookResponseDTO>> {
         val books = bookService.getAllBooks()
         return ResponseEntity(books, HttpStatus.OK)
     }
 
     @PostMapping
-    fun addBook(@RequestBody bookDTO:BookDTO) : ResponseEntity<String> {
+    fun addBook(@RequestBody bookResponseDTO:BookResponseDTO) : ResponseEntity<String> {
         return try{
-            val savedBook = bookService.addBook(bookDTO);
+            val savedBook = bookService.addBook(bookResponseDTO);
             ResponseEntity("Book Added successfully with title: '${savedBook.title}'", HttpStatus.CREATED)
-        }catch (e:BookAlreadyExistsException) {
+        }catch (e:BookAlreadyExists) {
             ResponseEntity(e.message,HttpStatus.CONFLICT)
         }
 

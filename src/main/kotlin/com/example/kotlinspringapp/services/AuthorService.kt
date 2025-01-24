@@ -1,6 +1,5 @@
 package com.example.kotlinspringapp.services
 
-import com.example.kotlinspringapp.exceptions.AuthorNotExistException
 import com.example.kotlinspringapp.model.Author
 import com.example.kotlinspringapp.model.Book
 import com.example.kotlinspringapp.repositories.AuthorRepository

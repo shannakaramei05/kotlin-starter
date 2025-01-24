@@ -1,14 +1,9 @@
 package com.example.kotlinspringapp.model
 
-import com.example.kotlinspringapp.dto.BookDTO
+import com.example.kotlinspringapp.dto.BookResponseDTO
 import com.fasterxml.jackson.annotation.JsonBackReference
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import jakarta.persistence.*
 
 @Entity
 data class Book(
@@ -18,19 +13,26 @@ data class Book(
     @Column(unique = true)
     val title:String,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     @JsonBackReference
     val author:Author? = null,
 
     val publishYear:String,
     val bookCoverUrl:String,
+
+    @OneToMany(mappedBy = "book", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonManagedReference
+    val vote: MutableList<Vote> = mutableListOf(),
+
+    var totalVotes:Int = 0,
+    var averageRating:Double = 0.0
 ) {
-    constructor(bookDTO: BookDTO, author: Author?) :this(
+    constructor(bookResponseDTO: BookResponseDTO, author: Author?) :this(
         id = 0,
-        title=bookDTO.title,
+        title=bookResponseDTO.title,
         author =author,
-        publishYear=bookDTO.publishYear,
-        bookCoverUrl=bookDTO.bookCoverUrl
+        publishYear=bookResponseDTO.publishYear,
+        bookCoverUrl=bookResponseDTO.bookCoverUrl
     )
 }
