@@ -2,6 +2,7 @@ package com.example.kotlinspringapp.controllers
 
 import com.example.kotlinspringapp.dto.RemoveWishListBookDTO
 import com.example.kotlinspringapp.dto.UserRegisterDTO
+import com.example.kotlinspringapp.dto.VoteRequestDTO
 import com.example.kotlinspringapp.dto.WishListBookRequestDTO
 import com.example.kotlinspringapp.exceptions.UserAlreadyExists
 import com.example.kotlinspringapp.model.User
@@ -61,5 +62,12 @@ class UserController (
         }else{
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book with title '${request.bookTitle}' not found in wishlist for user ${request.userId}.")
         }
+    }
+
+
+    @PostMapping("/vote")
+    fun doVote(@RequestBody request:VoteRequestDTO) :ResponseEntity<String> {
+        val vote = voteService.doVote(request)
+        return ResponseEntity(vote, HttpStatus.ACCEPTED)
     }
 }

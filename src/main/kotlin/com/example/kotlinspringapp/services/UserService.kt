@@ -6,6 +6,7 @@ import com.example.kotlinspringapp.mapper.BookMapper
 import com.example.kotlinspringapp.mapper.UserMapper
 import com.example.kotlinspringapp.model.User
 import com.example.kotlinspringapp.repositories.UserRepository
+import com.example.kotlinspringapp.repositories.VoteRepository
 import com.example.kotlinspringapp.repositories.WishListRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service

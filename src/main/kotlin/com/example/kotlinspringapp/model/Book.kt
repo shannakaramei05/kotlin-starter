@@ -25,8 +25,8 @@ data class Book(
     @JsonManagedReference
     val vote: MutableList<Vote> = mutableListOf(),
 
-    val totalVotes:Int = 0,
-    val averageRating:Double = 0.0
+    var totalVotes:Int = 0,
+    var averageRating:Double = 0.0
 ) {
     constructor(bookResponseDTO: BookResponseDTO, author: Author?) :this(
         id = 0,

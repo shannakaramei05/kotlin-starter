@@ -22,5 +22,6 @@ data class Vote(
     @JoinColumn(name = "book_id")
     @JsonBackReference
     val book:Book,
-    val rating:Int
+    var rating:Int,
+    var comment:String
 )
