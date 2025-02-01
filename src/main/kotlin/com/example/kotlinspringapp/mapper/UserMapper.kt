@@ -10,7 +10,8 @@ object UserMapper {
         return User(
             userId = userDTO.userId,
             fullName = userDTO.fullName,
-            email = userDTO.email
+            email = userDTO.email,
+            role = userDTO.role
         )
     }
 }

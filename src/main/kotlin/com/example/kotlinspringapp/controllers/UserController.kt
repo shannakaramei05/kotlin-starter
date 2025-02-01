@@ -65,9 +65,9 @@ class UserController (
     }
 
 
-    @PostMapping("/vote")
-    fun doVote(@RequestBody request:VoteRequestDTO) :ResponseEntity<String> {
-        val vote = voteService.doVote(request)
-        return ResponseEntity(vote, HttpStatus.ACCEPTED)
-    }
+//    @PostMapping("/vote")
+//    fun doVote(@RequestBody request:VoteRequestDTO) :ResponseEntity<String> {
+//        val vote = voteService.doVote(request)
+//        return ResponseEntity(vote, HttpStatus.ACCEPTED)
+//    }
 }

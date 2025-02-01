@@ -2,6 +2,8 @@ package com.example.kotlinspringapp.services
 
 import com.example.kotlinspringapp.dto.RemoveWishListBookDTO
 import com.example.kotlinspringapp.dto.UserRegisterDTO
+import com.example.kotlinspringapp.exceptions.UserAlreadyExists
+import com.example.kotlinspringapp.exceptions.UserNotFound
 import com.example.kotlinspringapp.mapper.BookMapper
 import com.example.kotlinspringapp.mapper.UserMapper
 import com.example.kotlinspringapp.model.User
@@ -17,7 +19,11 @@ class UserService (
     private val wishListRepository: WishListRepository){
 
     fun registerUser(request: UserRegisterDTO) : User {
-        return userRepository.save(UserMapper.toEntity(request))
+        val user = userRepository.findByUserId(request.userId);
+        if(!user.isPresent){
+            return userRepository.save(UserMapper.toEntity(request))
+        }
+        throw UserAlreadyExists("User Already Exist")
     }
 
     fun retrieveUser(): List<User>{
@@ -25,7 +31,7 @@ class UserService (
     }
 
     fun getWishListBook(userId:String) : List<String> {
-        val user = userRepository.findByUserId(userId)
+        val user = userRepository.findByUserId(userId).orElseThrow { throw UserNotFound("User Not Found, Please Check Again USER ID") }
         return BookMapper.wishListToString(user.wishlistBook)
     }
 

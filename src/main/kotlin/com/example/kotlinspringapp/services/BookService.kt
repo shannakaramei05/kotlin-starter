@@ -2,6 +2,7 @@ package com.example.kotlinspringapp.services
 
 import com.example.kotlinspringapp.dto.BookResponseDTO
 import com.example.kotlinspringapp.dto.WishListBookRequestDTO
+import com.example.kotlinspringapp.exceptions.UserNotFound
 import com.example.kotlinspringapp.mapper.BookMapper
 import com.example.kotlinspringapp.model.Author
 import com.example.kotlinspringapp.model.Book
@@ -47,7 +48,7 @@ class BookService (
 
     @Transactional
     fun addWishListBook(request:WishListBookRequestDTO) : WishListBook {
-        val user = userRepository.findByUserId(request.userId)
+        val user = userRepository.findByUserId(request.userId).orElseThrow { throw UserNotFound("User Not Found, Please Check Again USER ID") }
         val wishList = BookMapper.toWishListEntity(request,user)
         user.wishlistBook.add(wishList)
         return wishListRepository.save(wishList)
