@@ -1,11 +1,9 @@
 package com.example.kotlinspringapp.mapper
 
+import com.example.kotlinspringapp.dto.AddStocksBookRequest
 import com.example.kotlinspringapp.dto.BookResponseDTO
 import com.example.kotlinspringapp.dto.WishListBookRequestDTO
-import com.example.kotlinspringapp.model.Author
-import com.example.kotlinspringapp.model.Book
-import com.example.kotlinspringapp.model.User
-import com.example.kotlinspringapp.model.WishListBook
+import com.example.kotlinspringapp.model.*
 
 object BookMapper {
    fun toDTO(book: Book) : BookResponseDTO {
@@ -36,5 +34,14 @@ object BookMapper {
 
     fun wishListToString(request:List<WishListBook>) : List<String> {
         return request.map{it.bookTitle}
+    }
+
+    fun toBookStocks(request:AddStocksBookRequest, book:Book) : BookStocks {
+        return BookStocks(
+            totalCopies = request.totalCopies,
+            availableCopies = request.availableCopes,
+            isAvailable = true,
+            book = book
+        )
     }
 }
