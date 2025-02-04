@@ -15,6 +15,6 @@ data class Lending(
     val borrowDate:LocalDateTime,
     val dueDate:LocalDateTime,
     val returnDate:LocalDateTime ? = null,
-    val isApprove:Boolean= false
+    var isApprove:Boolean= false
 
 )

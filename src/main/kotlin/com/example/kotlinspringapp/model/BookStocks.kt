@@ -13,8 +13,8 @@ data class BookStocks(
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     val sequenceNo:Long = 0,
     val totalCopies:Int,
-    var availableCopies: Int? = 0,
-    val isAvailable:Boolean = true,
+    var availableCopies: Int = 0,
+    var isAvailable:Boolean = true,
 
     @OneToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")

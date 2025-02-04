@@ -25,6 +25,6 @@ data class Book(
     val vote: MutableList<Vote> = mutableListOf(),
 
     @OneToOne(mappedBy = "book", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val bookStocks:BookStocks?= null
+    var bookStocks:BookStocks?= null
 
 )
