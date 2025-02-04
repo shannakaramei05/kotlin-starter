@@ -1,6 +1,5 @@
 package com.example.kotlinspringapp.model
 
-import com.example.kotlinspringapp.dto.BookResponseDTO
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
@@ -25,14 +24,7 @@ data class Book(
     @JsonManagedReference
     val vote: MutableList<Vote> = mutableListOf(),
 
-    var totalVotes:Int = 0,
-    var averageRating:Double = 0.0
-) {
-    constructor(bookResponseDTO: BookResponseDTO, author: Author?) :this(
-        id = 0,
-        title=bookResponseDTO.title,
-        author =author,
-        publishYear=bookResponseDTO.publishYear,
-        bookCoverUrl=bookResponseDTO.bookCoverUrl
-    )
-}
+    @OneToOne(mappedBy = "book", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    var bookStocks:BookStocks?= null
+
+)

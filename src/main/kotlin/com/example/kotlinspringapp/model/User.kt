@@ -1,12 +1,8 @@
 package com.example.kotlinspringapp.model
 
+import com.example.kotlinspringapp.constan.Role
 import com.fasterxml.jackson.annotation.JsonManagedReference
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 
 @Entity
 data class User(
@@ -15,6 +11,10 @@ data class User(
     val userId: String,
     val fullName: String,
     val email: String,
+    @Enumerated(EnumType.STRING)
+    val role: Role = Role.USER,
+
+    val isVerify:Boolean = false,
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     @JsonManagedReference

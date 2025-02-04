@@ -1,12 +1,10 @@
 package com.example.kotlinspringapp.controllers
 
-import com.example.kotlinspringapp.dto.RemoveWishListBookDTO
-import com.example.kotlinspringapp.dto.UserRegisterDTO
-import com.example.kotlinspringapp.dto.VoteRequestDTO
-import com.example.kotlinspringapp.dto.WishListBookRequestDTO
+import com.example.kotlinspringapp.dto.*
 import com.example.kotlinspringapp.exceptions.UserAlreadyExists
 import com.example.kotlinspringapp.model.User
 import com.example.kotlinspringapp.services.BookService
+import com.example.kotlinspringapp.services.LendingService
 import com.example.kotlinspringapp.services.UserService
 import com.example.kotlinspringapp.services.VoteService
 import org.springframework.http.HttpStatus
@@ -24,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController
 class UserController (
     private val userService: UserService,
     private val voteService: VoteService,
-    private val bookService: BookService){
+    private val bookService: BookService,
+    private val lendingService: LendingService){
 
     @PostMapping("/register")
     fun registerUser(@RequestBody userRequest: UserRegisterDTO) : ResponseEntity<String> {
@@ -65,9 +64,14 @@ class UserController (
     }
 
 
-    @PostMapping("/vote")
-    fun doVote(@RequestBody request:VoteRequestDTO) :ResponseEntity<String> {
-        val vote = voteService.doVote(request)
-        return ResponseEntity(vote, HttpStatus.ACCEPTED)
+//    @PostMapping("/vote")
+//    fun doVote(@RequestBody request:VoteRequestDTO) :ResponseEntity<String> {
+//        val vote = voteService.doVote(request)
+//        return ResponseEntity(vote, HttpStatus.ACCEPTED)
+//    }
+
+    @PostMapping("/lends/book")
+    fun requestLendBook (@RequestBody request:LendingBookRequest) : LendingBookResponse{
+        return lendingService.requestLendBook(request)
     }
 }
