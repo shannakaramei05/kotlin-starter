@@ -12,7 +12,7 @@ class JwtUserDetailsService(private val userRepository: UserRepository) :UserDet
 
         return User.builder()
             .username(user.get().userId)
-            .password(user.get().email)
+            .password(user.get().password)
             .roles(user.get().role.toString())
             .build()
     }

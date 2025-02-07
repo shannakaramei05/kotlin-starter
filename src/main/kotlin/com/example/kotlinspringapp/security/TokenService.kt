@@ -9,7 +9,7 @@ import java.util.Date
 import javax.crypto.spec.SecretKeySpec
 
 @Service
-class TokenService (@Value("jwt.secret") private val secret:String = ""){
+class TokenService (@Value("\${jwt.secret}") private val secret:String = ""){
 
     private val signKey:SecretKeySpec
         get() {

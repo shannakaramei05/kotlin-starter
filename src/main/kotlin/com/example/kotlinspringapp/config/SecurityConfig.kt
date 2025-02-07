@@ -45,7 +45,7 @@ class SecurityConfig {
 
         http.csrf {it.disable()}
             .authorizeHttpRequests{
-                it.requestMatchers("/api/auth/refresh", "/error")
+                it.requestMatchers("/api/v1/users/register", "/api/v1/books","/api/v1/authors/**","/api/v1/auth/login","/error")
                     .permitAll()
                     .anyRequest()
                     .fullyAuthenticated()
