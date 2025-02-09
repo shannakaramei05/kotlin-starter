@@ -7,11 +7,13 @@ import com.example.kotlinspringapp.dto.LendingBookResponse
 import com.example.kotlinspringapp.exceptions.BookNotAvailable
 import com.example.kotlinspringapp.exceptions.BookNotFound
 import com.example.kotlinspringapp.exceptions.RequestNotValid
+import com.example.kotlinspringapp.exceptions.UserNotFound
 import com.example.kotlinspringapp.mapper.LendingMapper
 import com.example.kotlinspringapp.model.Lending
 import com.example.kotlinspringapp.repositories.BookRepository
 import com.example.kotlinspringapp.repositories.BookStocksRepository
 import com.example.kotlinspringapp.repositories.LendingRepository
+import com.example.kotlinspringapp.repositories.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -21,6 +23,7 @@ import java.time.temporal.ChronoUnit
 class LendingService (
     private val lendingRepository: LendingRepository,
     private val bookRepository: BookRepository,
+    private val userRepository: UserRepository,
     private val bookStocksRepository: BookStocksRepository
     ) {
 
@@ -28,6 +31,12 @@ class LendingService (
         val book = bookRepository.findById(request.bookId).orElseThrow { throw BookNotFound("Book Not Found") }
         //checking availableCopies
         val availableCopies = book.bookStocks?.availableCopies;
+
+        //checking user is member or not
+        val user = userRepository.findByUserId(request.userId).orElseThrow{throw UserNotFound("User Not Found!")}
+        if(!user.isVerify) {
+            throw RequestNotValid("user is not membership, wait admin to approve!!")
+        }
 
         val requestLending = Lending(
             bookId =  request.bookId,
