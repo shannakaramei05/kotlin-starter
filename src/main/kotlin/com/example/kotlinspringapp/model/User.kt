@@ -15,6 +15,7 @@ data class User(
     val role: Role = Role.USER,
 
     val isVerify:Boolean = false,
+    val password:String,
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     @JsonManagedReference

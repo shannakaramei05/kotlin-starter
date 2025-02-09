@@ -5,15 +5,19 @@ import com.example.kotlinspringapp.dto.UserRegisterDTO
 import com.example.kotlinspringapp.extension.toUserResponseDTO
 import com.example.kotlinspringapp.model.Book
 import com.example.kotlinspringapp.model.User
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 
 object UserMapper {
 
     fun toEntity(userDTO: UserRegisterDTO) : User {
+        val bCryptPasswordEncoder = BCryptPasswordEncoder();
         return User(
             userId = userDTO.userId,
             fullName = userDTO.fullName,
             email = userDTO.email,
-            role = userDTO.role
+            password = bCryptPasswordEncoder.encode(userDTO.password),
+            role = userDTO.role,
         )
     }
 

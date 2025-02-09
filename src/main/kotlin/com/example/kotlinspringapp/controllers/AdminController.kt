@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-@RequestMapping("/v1/admin")
+@RequestMapping("/api/v1/admin")
 class AdminController (
     private val userService: UserService,
     private val bookService: BookService,
